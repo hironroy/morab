@@ -8,12 +8,15 @@ void Button::begin(int _pin, int _debounceInterval){
 }
 
 void Button::loop(){
-  debouncer.update();
+  boolean changed = debouncer.update();
+  if(changed){
   int value = debouncer.read();
-  if ( value == LOW ) {
-    Serial.println("Button Pressed");
-  } 
-  else {
+    if ( value == LOW ) {
+      Serial.println("Button Pressed");
+    } 
+    else {
+      Serial.println("Button Released");
+    }
   }
 }
 
