@@ -9,8 +9,12 @@ class Button {
 public:
     void begin(int _pin, int _debounceInterval);
     void loop();
+    boolean isPressed();
+    boolean isNewlyTriggered();
 private:
     Bounce debouncer;
+    boolean pressed;
+    boolean triggered;
 };
 
 #endif /* defined(__Morab__Button__) */

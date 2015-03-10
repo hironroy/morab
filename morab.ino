@@ -51,6 +51,9 @@ void blink(){
 void runInterval(){
    metronome.loop();
    button1.loop();
+   if(button1.isNewlyTriggered()){
+     Serial.println("Button is triggered."); 
+   }
 }
 
 
