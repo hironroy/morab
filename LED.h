@@ -6,9 +6,10 @@
 class LED {
 public:
     void begin(int _led, int _blinkDuration, int _loopDuration);
-    void startBlink();
     void loop();
+    void trigger();
 private:
+    void startBlink();
     void stopBlink();
     void decrementBlink();
     

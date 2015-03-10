@@ -14,20 +14,21 @@
 // Pin 13 has an LED connected on most Arduino boards.
 // give it a name:
 int led = 8;
+int loopInterval = 8;
 
-LED ledEight;
+LED metronome;
 
 // the setup routine runs once when you press reset:
 void setup() {                
   // initialize the digital pin as an output.
   Serial.begin(9600);      // open the serial port at 9600 bps:
   
-  ledEight.begin(8, 500, 8);
+  metronome.begin(8, 500, loopInterval);
   
   tBeat.init();
   //All of the actuators get triggered at the sample interval
   tBeat.newHook(1000, blink);
-  tBeat.newHook(8, runInterval);
+  tBeat.newHook(loopInterval, runInterval);
 
   tBeat.start();
 }
@@ -38,11 +39,11 @@ void loop() {
 }
 
 void blink(){
-  ledEight.startBlink();
+  metronome.trigger();
 }
 
 void runInterval(){
-   ledEight.loop();
+   metronome.loop();
 }
 
 

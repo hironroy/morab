@@ -11,6 +11,10 @@ void LED::begin(int _led, int _blinkDuration, int _loopDuration){
 
 }
 
+void LED::trigger(){
+ startBlink(); 
+}
+
 void LED::startBlink(){
     isUp = true;
     currentBlinkRemaining = blinkDuration;
