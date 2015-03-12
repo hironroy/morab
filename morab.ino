@@ -11,18 +11,30 @@
 #include "tBeat.h"
 #include "Bounce2.h"
 
-#include "LED.h"
-#include "Button.h"
 #include "Instrument.h"
 
-// Pin 13 has an LED connected on most Arduino boards.
-// give it a name:
-int led = 8;
-int loopInterval = 8;
+//Milliseconds that elapsed between system state evaluations via tBeat
+int loop_interval = 8;
 
-//LED metronome;
-//Button button1;
-Instrument instrument;
+//Pin Declarations
+int led = 3;
+
+int btn_debounce_interval = 5;
+int ins1_btn_pin = 28;
+int ins2_btn_pin = 30;
+int ins3_btn_pin = 32;
+int ins4_btn_pin = 34;
+
+int led_blink_duration = 500;
+int ins1_led_pin = 3;
+int ins2_led_pin = 4;
+int ins3_led_pin = 5;
+int ins4_led_pin = 6;
+
+Instrument ins1;
+Instrument ins2;
+Instrument ins3;
+Instrument ins4;
 
 // the setup routine runs once when you press reset:
 void setup() {                
@@ -31,11 +43,15 @@ void setup() {
   
 //  metronome.begin(8, 500, loopInterval);
 //  button1.begin(24, 5);
-  instrument.begin(24, 5, led, 500, loopInterval);
+  ins1.begin(ins1_btn_pin, btn_debounce_interval, ins1_led_pin, led_blink_duration, loop_interval);
+  ins2.begin(ins2_btn_pin, btn_debounce_interval, ins2_led_pin, led_blink_duration, loop_interval);
+  ins3.begin(ins3_btn_pin, btn_debounce_interval, ins3_led_pin, led_blink_duration, loop_interval);
+  ins4.begin(ins4_btn_pin, btn_debounce_interval, ins4_led_pin, led_blink_duration, loop_interval);
+
   
   tBeat.init();
   //All of the actuators get triggered at the sample interval
-  tBeat.newHook(loopInterval, runInterval);
+  tBeat.newHook(loop_interval, runInterval);
 
   tBeat.start();
 }
@@ -47,7 +63,11 @@ void loop() {
 
 
 void runInterval(){
-  instrument.loop();
+  ins1.loop();
+  ins2.loop();
+  ins3.loop();
+  ins4.loop();
+
 }
 
 
