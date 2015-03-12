@@ -12,13 +12,13 @@
 #include "Bounce2.h"
 
 #include "Instrument.h"
+#include "Metronome.h"
+#include "LED.h"
 
 //Milliseconds that elapsed between system state evaluations via tBeat
 int loop_interval = 8;
 
 //Pin Declarations
-int led = 3;
-
 int btn_debounce_interval = 5;
 int ins1_btn_pin = 28;
 int ins2_btn_pin = 30;
@@ -36,11 +36,18 @@ Instrument ins2;
 Instrument ins3;
 Instrument ins4;
 
+Metronome metronome;
+LED mled;
+int metronome_led = 8;
+
 // the setup routine runs once when you press reset:
 void setup() {                
   // initialize the digital pin as an output.
   Serial.begin(9600);      // open the serial port at 9600 bps:
   
+  metronome.begin(50, loop_interval);
+  mled.begin(metronome_led, 200, loop_interval);
+
 //  metronome.begin(8, 500, loopInterval);
 //  button1.begin(24, 5);
   ins1.begin(ins1_btn_pin, btn_debounce_interval, ins1_led_pin, led_blink_duration, loop_interval);
@@ -63,6 +70,14 @@ void loop() {
 
 
 void runInterval(){
+  
+  metronome.loop();
+  if(metronome.isBeatInterval()){
+    Serial.println("Beat");
+     mled.trigger(); 
+  }
+  
+  
   ins1.loop();
   ins2.loop();
   ins3.loop();
