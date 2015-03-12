@@ -7,13 +7,16 @@
   @author Hiron Roy
   @email me@hironroy.com
  */
-
 #include "tBeat.h"
 #include "Bounce2.h"
 
 #include "Instrument.h"
 #include "Metronome.h"
 #include "LED.h"
+#include "MIns.h"
+
+
+
 
 //Milliseconds that elapsed between system state evaluations via tBeat
 int loop_interval = 8;
@@ -37,7 +40,7 @@ Instrument ins3;
 Instrument ins4;
 
 Metronome metronome;
-LED mled;
+MIns m_ins;
 int metronome_led = 8;
 
 // the setup routine runs once when you press reset:
@@ -46,7 +49,8 @@ void setup() {
   Serial.begin(9600);      // open the serial port at 9600 bps:
   
   metronome.begin(50, loop_interval);
-  mled.begin(metronome_led, 200, loop_interval);
+  
+  m_ins.begin(metronome, metronome_led, 200, loop_interval);
 
 //  metronome.begin(8, 500, loopInterval);
 //  button1.begin(24, 5);
@@ -72,12 +76,7 @@ void loop() {
 void runInterval(){
   
   metronome.loop();
-  if(metronome.isBeatInterval()){
-    Serial.println("Beat");
-     mled.trigger(); 
-  }
-  
-  mled.loop();
+  m_ins.loop();
   
   ins1.loop();
   ins2.loop();
