@@ -77,6 +77,7 @@ void runInterval(){
      mled.trigger(); 
   }
   
+  mled.loop();
   
   ins1.loop();
   ins2.loop();
