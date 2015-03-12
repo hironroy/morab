@@ -1,4 +1,3 @@
-
 /*
   Blink
   Turns on an LED on for one second, then off for one second, repeatedly.
@@ -10,30 +9,32 @@
  */
 
 #include "tBeat.h"
-#include "LED.h"
-#include "Button.h"
 #include "Bounce2.h"
 
+#include "LED.h"
+#include "Button.h"
+#include "Instrument.h"
 
 // Pin 13 has an LED connected on most Arduino boards.
 // give it a name:
 int led = 8;
 int loopInterval = 8;
 
-LED metronome;
-Button button1;
+//LED metronome;
+//Button button1;
+Instrument instrument;
 
 // the setup routine runs once when you press reset:
 void setup() {                
   // initialize the digital pin as an output.
   Serial.begin(9600);      // open the serial port at 9600 bps:
   
-  metronome.begin(8, 500, loopInterval);
-  button1.begin(24, 5);
+//  metronome.begin(8, 500, loopInterval);
+//  button1.begin(24, 5);
+  instrument.begin(24, 5, led, 500, loopInterval);
   
   tBeat.init();
   //All of the actuators get triggered at the sample interval
-  tBeat.newHook(1000, blink);
   tBeat.newHook(loopInterval, runInterval);
 
   tBeat.start();
@@ -44,16 +45,9 @@ void loop() {
     tBeat.exec();
 }
 
-void blink(){
-  metronome.trigger();
-}
 
 void runInterval(){
-   metronome.loop();
-   button1.loop();
-   if(button1.isNewlyTriggered()){
-     Serial.println("Button is triggered."); 
-   }
+  instrument.loop();
 }
 
 
