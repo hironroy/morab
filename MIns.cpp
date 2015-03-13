@@ -7,9 +7,12 @@ void MIns::begin(Metronome _metronome, int _led_pin, int _hit_length, int _loop_
 }
 
 void MIns::loop(){
+  
   if(metronome.isBeatInterval()){
-     led.trigger(); 
-  }  
+    Serial.println("Metronome LED Trigger");
+     led.trigger();
+  }
+
   led.loop();
 }
 

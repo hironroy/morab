@@ -76,6 +76,9 @@ void loop() {
 void runInterval(){
   
   metronome.loop();
+  if(metronome.isBeatInterval()){
+     Serial.println("Eval True"); 
+  }
   m_ins.loop();
   
   ins1.loop();

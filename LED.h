@@ -14,8 +14,8 @@ private:
     void decrementBlink();
     
     boolean isUp;
-    boolean blinkDuration;
-    
+
+    int blinkDuration;    
     int currentBlinkRemaining;
     int loopDuration;
     int led;

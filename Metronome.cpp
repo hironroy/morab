@@ -34,6 +34,7 @@ void Metronome::loop(){
   if(msSinceLastBeat > currentDelay){
     resetBeat();
     is_beat_interval= true;
+    Serial.println("Metronome Beat Interval");
   }
 }
 
