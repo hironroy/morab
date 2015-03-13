@@ -13,10 +13,6 @@
 #include "Instrument.h"
 #include "Metronome.h"
 #include "LED.h"
-#include "MIns.h"
-
-
-
 
 //Milliseconds that elapsed between system state evaluations via tBeat
 int loop_interval = 8;
@@ -28,7 +24,7 @@ int ins2_btn_pin = 30;
 int ins3_btn_pin = 32;
 int ins4_btn_pin = 34;
 
-int led_blink_duration = 500;
+int led_blink_duration = 100;
 int ins1_led_pin = 3;
 int ins2_led_pin = 4;
 int ins3_led_pin = 5;
@@ -40,7 +36,8 @@ Instrument ins3;
 Instrument ins4;
 
 Metronome metronome;
-MIns m_ins;
+LED metronome_instrument;
+
 int metronome_led = 8;
 
 // the setup routine runs once when you press reset:
@@ -48,12 +45,9 @@ void setup() {
   // initialize the digital pin as an output.
   Serial.begin(9600);      // open the serial port at 9600 bps:
   
-  metronome.begin(50, loop_interval);
-  
-  m_ins.begin(metronome, metronome_led, 200, loop_interval);
+  metronome.begin(100, loop_interval);
+  metronome_instrument.begin(metronome_led, led_blink_duration, loop_interval);
 
-//  metronome.begin(8, 500, loopInterval);
-//  button1.begin(24, 5);
   ins1.begin(ins1_btn_pin, btn_debounce_interval, ins1_led_pin, led_blink_duration, loop_interval);
   ins2.begin(ins2_btn_pin, btn_debounce_interval, ins2_led_pin, led_blink_duration, loop_interval);
   ins3.begin(ins3_btn_pin, btn_debounce_interval, ins3_led_pin, led_blink_duration, loop_interval);
@@ -77,9 +71,10 @@ void runInterval(){
   
   metronome.loop();
   if(metronome.isBeatInterval()){
-     Serial.println("Eval True"); 
+    Serial.println("Beat Interval");
+     metronome_instrument.trigger(); 
   }
-  m_ins.loop();
+  metronome_instrument.loop();
   
   ins1.loop();
   ins2.loop();

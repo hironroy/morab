@@ -12,6 +12,7 @@ void LED::begin(int _led, int _blinkDuration, int _loopDuration){
 }
 
 void LED::trigger(){
+  Serial.println("LED Trigger");
  startBlink(); 
 }
 
